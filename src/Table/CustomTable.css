@@ -1,0 +1,25 @@
+.custom-table {
+  margin-left: 50px; 
+}
+
+.custom-table th {
+  background-color: #f0f0f0;
+  color: #333;
+  font-weight: bold;
+  padding: 12px;
+  text-align: left;
+}
+
+.custom-table td {
+  padding: 10px;
+}
+
+.custom-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.custom-pagination {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
