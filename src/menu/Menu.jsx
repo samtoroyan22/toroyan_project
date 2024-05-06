@@ -1,11 +1,39 @@
 import React, { useState } from 'react';
-import { MenuOutlined, HeartOutlined, FolderOpenOutlined, DatabaseOutlined, EnvironmentOutlined, LeftOutlined } from '@ant-design/icons';
-import MenuItem from './MenuItem';
+import { MenuOutlined, HeartOutlined, FolderOpenOutlined, DatabaseOutlined, EnvironmentOutlined, LineChartOutlined, LeftOutlined } from '@ant-design/icons';
+import { Menu } from 'antd';
+import { Link } from 'react-router-dom';
 import './Menu.css';
 
-const Menu = ({ onToggleMenu }) => {
+export default function CustomMenu({ onToggleMenu }) {
   const [isMenuOpen, setIsMenuOpen] = useState(true);
-  const [activeSection, setActiveSection] = useState('Потребности');
+
+  const items = [
+    {
+      label: <Link to='/preorders'>Потребности</Link>,
+      key: "preorders",
+      icon: <HeartOutlined />
+    },
+    {
+      label: <Link to='/configurations'>Конфигурации</Link>,
+      key: "configurations",
+      icon: <FolderOpenOutlined />
+    },
+    {
+      label: <Link to='/datacenters'>ЦОДы</Link>,
+      key: "datacenters",
+      icon: <DatabaseOutlined />
+    },
+    {
+      label: <Link to='/environments'>Среды</Link>,
+      key: "environments",
+      icon: <EnvironmentOutlined />
+    },
+    {
+      label: <Link to='/configurations_chart'>Графики</Link>,
+      key: "configurations_chart",
+      icon: <LineChartOutlined />
+    }
+  ];
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -19,33 +47,14 @@ const Menu = ({ onToggleMenu }) => {
           {isMenuOpen ? <LeftOutlined className="menu-icon" /> : <MenuOutlined className="menu-icon" />}
           <span className="menu-title">Меню</span>
         </li>
-        <MenuItem
-          title="Потребности"
-          isActive={activeSection === 'Потребности'}
-          onClick={() => setActiveSection('Потребности')}
-          icon={<HeartOutlined />}
-        />
-        <MenuItem
-          title="Конфигурации"
-          isActive={activeSection === 'Конфигурации'}
-          onClick={() => setActiveSection('Конфигурации')}
-          icon={<FolderOpenOutlined />}
-        />
-        <MenuItem
-          title="ЦОДы"
-          isActive={activeSection === 'ЦОДы'}
-          onClick={() => setActiveSection('ЦОДы')}
-          icon={< DatabaseOutlined/>}
-        />
-        <MenuItem
-          title="Среды"
-          isActive={activeSection === 'Среды'}
-          onClick={() => setActiveSection('Среды')}
-          icon={<EnvironmentOutlined />}
-        />
+        <Menu mode="inline" style={{ backgroundColor: "#3462a2" }}>
+          {items.map(item => (
+            <Menu.Item key={item.key} icon={item.icon} style={{ color: 'white' }}>
+              {item.label}
+            </Menu.Item>
+          ))}
+        </Menu>
       </ul>
     </div>
   );
 };
-
-export default Menu;

@@ -1,14 +1,14 @@
 import React from 'react';
 import { Button } from 'antd';
-import './CreatePreorderBlock.css';
+import './CreateBlock.css';
 
-const CreatePreorderBlock = ({ onCreatePreorder }) => {
+const CreateBlock = ({ onCreatePreorder, header }) => {
   return (
     <div className="create-preorder-block">
-      <h2>Потребности</h2>
+      <h2>{header}</h2>
       <Button type="primary" className="create-button" onClick={onCreatePreorder}>Создать</Button>
     </div>
   );
 };
 
-export default CreatePreorderBlock;
+export default CreateBlock;
