@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Table, Pagination, Switch } from 'antd';
-import './CustomTable.css';
+import './PreordersTable.css';
 
-const CustomTable = ({ preorders, pageSizeOptions, defaultPageSize, configurations, environments, datacenters }) => {
+const PreordersTable = ({ preorders, pageSizeOptions, defaultPageSize, configurations, environments, datacenters }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(defaultPageSize);
 
@@ -93,4 +93,4 @@ const CustomTable = ({ preorders, pageSizeOptions, defaultPageSize, configuratio
   );
 };
 
-export default CustomTable;
+export default PreordersTable;

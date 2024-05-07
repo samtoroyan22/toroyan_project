@@ -3,15 +3,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import CreateBlock from './CreateItems/CreateBlock';
 import CreateModal from './CreateItems/CreateModal';
 import FilterBlock from './FilterBlock/FilterBlock';
-import CustomTable from './Table/CustomTable';
-import { fetchEnvironments, fetchConfigurations, fetchDatacenters, fetchPreorders, fetchFilteredPreorders } from '../slices/preordersSlice';
+import PreordersTable from './Table/PreordersTable';
+import { fetchPreorders } from '../slices/api/fetchPreorders';
+import { fetchFilteredPreorders } from '../slices/api/fetchFilteredPreorders';
+import { fetchEnvironments } from '../slices/api/fetchEnvironments';
+import { fetchConfigurations } from '../slices/api/fetchConfigurations';
+import { fetchDatacenters } from '../slices/api/fetchDatacenters';
+import { createPreorder } from '../slices/api/createPreorder';
 
 function Preorders() {
   const dispatch = useDispatch();
 
-  const environments = useSelector(state => state.preorders.environments);
-  const configurations = useSelector(state => state.preorders.configurations);
-  const datacenters = useSelector(state => state.preorders.datacenters);
+  const environments = useSelector(state => state.environments.environments);
+  const configurations = useSelector(state => state.configurations.configurations);
+  const datacenters = useSelector(state => state.datacenters.datacenters);
   const preorders = useSelector(state => state.preorders.preorders);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -42,7 +47,7 @@ function Preorders() {
           datacenters={datacenters}
           statuses={preorders}
         />
-        <CustomTable 
+        <PreordersTable 
           preorders={preorders}
           configurations={configurations}
           environments={environments}

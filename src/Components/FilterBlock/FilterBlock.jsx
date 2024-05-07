@@ -22,7 +22,7 @@ const FilterBlock = ({ fetchFilteredPreorders, configurations, environments, dat
     fetchFilteredPreorders(updatedFilters);
   };
 
-  const uniqueStatuses = [...new Set(statuses.map(stat => stat.status))];
+  const uniqueStatuses = statuses ? [...new Set(statuses.map(stat => stat.status))] : [];
 
   return (
     <Collapse
@@ -49,7 +49,7 @@ const FilterBlock = ({ fetchFilteredPreorders, configurations, environments, dat
             <label htmlFor="configurationId">Конфигурация:</label>
             <Select id="configurationId" name="configurationId" onChange={(value) => handleSelectChange(value, 'configurationId')}>
               <Option value="">Выберите конфигурацию</Option>
-              {configurations.map(config => (
+              {configurations && configurations.map(config => (
                 <Option key={config.id} value={config.id}>{config.title}</Option>
               ))}
             </Select>
@@ -58,7 +58,7 @@ const FilterBlock = ({ fetchFilteredPreorders, configurations, environments, dat
             <label htmlFor="environmentId">Среда:</label>
             <Select id="environmentId" name="environmentId" onChange={(value) => handleSelectChange(value, 'environmentId')}>
               <Option value="">Выберите среду</Option>
-              {environments.map(env => (
+              {environments && environments.map(env => (
                 <Option key={env.id} value={env.id}>{env.title}</Option>
               ))}
             </Select>
@@ -66,7 +66,7 @@ const FilterBlock = ({ fetchFilteredPreorders, configurations, environments, dat
           <div className="filter-item">
             <label htmlFor="datacenterIds">ЦОДы:</label>
             <Select id="datacenterIds" name="datacenterIds" mode="multiple" onChange={(value) => handleSelectChange(value, 'datacenterIds')}>
-              {datacenters.map(dc => (
+              {datacenters && datacenters.map(dc => (
                 <Option key={dc.id} value={dc.id}>{dc.title}</Option>
               ))}
             </Select>
@@ -75,7 +75,7 @@ const FilterBlock = ({ fetchFilteredPreorders, configurations, environments, dat
             <label htmlFor="status">Статус:</label>
             <Select id="status" name="status" onChange={(value) => handleSelectChange(value, 'status')}>
                 <Option value="">Выберите статус</Option>
-                {uniqueStatuses.map((status, index) => (
+                {uniqueStatuses && uniqueStatuses.map((status, index) => (
                     <Option key={index} value={status}>{status}</Option>
                 ))}
             </Select>

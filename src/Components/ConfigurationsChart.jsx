@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Line } from 'react-chartjs-2';
 import { fetchConfigurationsChart } from '../slices/configurationsChartSlice';
+import { Spin } from 'antd'; // Импорт компонента Spin из ant.design
+import Chart from 'chart.js/auto';
 
 const ConfigurationsChart = () => {
   const dispatch = useDispatch();
@@ -12,10 +14,6 @@ const ConfigurationsChart = () => {
   useEffect(() => {
     dispatch(fetchConfigurationsChart());
   }, [dispatch]);
-
-  if (configurationsChartLoading) {
-    return <div>Loading...</div>;
-  }
 
   if (configurationsChartError) {
     return <div>Error: {configurationsChartError}</div>;
@@ -31,7 +29,6 @@ const ConfigurationsChart = () => {
         label: 'Configurations',
         data: counts,
         fill: false,
-        backgroundColor: '#3462a2',
       },
     ],
   };
@@ -39,7 +36,13 @@ const ConfigurationsChart = () => {
   return (
     <div id='content'>
       <h2 style={{marginLeft:50}}>Configurations Chart</h2>
-      <Line data={data} />
+      {configurationsChartLoading ? (
+        <div style={{ textAlign: 'center', marginTop: 50 }}>
+          <Spin size="large" />
+        </div>
+      ) : (
+        <Line data={data} />
+      )}
     </div>
   );
 };

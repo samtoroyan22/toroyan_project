@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Input, Button, Form, message, Switch, Checkbox, Select } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { createPreorder } from '../../slices/preordersSlice';
+import { createPreorder } from '../../slices/api/createPreorder';
 
 const { Option } = Select;
 
@@ -15,7 +15,6 @@ const CreateModal = ({ onCloseModal, fieldsConfig }) => {
     try {
       setIsSubmitting(true);
       const values = await form.validateFields();
-      console.log('Form data:', values);
 
       const lastId = Math.max(...preorders.map(preorder => parseInt(preorder.id)), 0);
 

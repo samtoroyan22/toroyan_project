@@ -47,13 +47,12 @@ export default function CustomMenu({ onToggleMenu }) {
           {isMenuOpen ? <LeftOutlined className="menu-icon" /> : <MenuOutlined className="menu-icon" />}
           <span className="menu-title">Меню</span>
         </li>
-        <Menu mode="inline" style={{ backgroundColor: "#3462a2" }}>
-          {items.map(item => (
-            <Menu.Item key={item.key} icon={item.icon} style={{ color: 'white' }}>
-              {item.label}
-            </Menu.Item>
-          ))}
-        </Menu>
+        <Menu 
+          mode="inline" 
+          style={{ backgroundColor: "#3462a2" }} 
+          items={items} 
+          theme='dark'
+        />
       </ul>
     </div>
   );
