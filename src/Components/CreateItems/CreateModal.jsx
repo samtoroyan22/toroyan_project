@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Input, Button, Form, message, Switch, Checkbox, Select } from 'antd';
 import { useDispatch } from 'react-redux';
-import { createPreorder } from '../../slices/api/createPreorder';
+import { createPreorder } from '../../api/createPreorder';
 
 const { Option } = Select;
 

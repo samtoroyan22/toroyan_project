@@ -4,12 +4,12 @@ import CreateBlock from './CreateItems/CreateBlock';
 import CreateModal from './CreateItems/CreateModal';
 import FilterBlock from './FilterBlock/FilterBlock';
 import PreordersTable from './Table/PreordersTable';
-import { fetchPreorders } from '../slices/api/fetchPreorders';
-import { fetchFilteredPreorders } from '../slices/api/fetchFilteredPreorders';
-import { fetchEnvironments } from '../slices/api/fetchEnvironments';
-import { fetchConfigurations } from '../slices/api/fetchConfigurations';
-import { fetchDatacenters } from '../slices/api/fetchDatacenters';
-import { createPreorder } from '../slices/api/createPreorder';
+import { fetchPreorders } from '../api/fetchPreorders';
+import { fetchFilteredPreorders } from '../api/fetchFilteredPreorders';
+import { fetchEnvironments } from '../api/fetchEnvironments';
+import { fetchConfigurations } from '../api/fetchConfigurations';
+import { fetchDatacenters } from '../api/fetchDatacenters';
+import { createPreorder } from '../api/createPreorder';
 
 function Preorders() {
   const dispatch = useDispatch();
