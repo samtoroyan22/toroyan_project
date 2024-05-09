@@ -8,6 +8,7 @@ import Configurations from './Components/Configurations';
 import Datacenters from './Components/Datacenters';
 import Environments from './Components/Environments';
 import ConfigurationsChart from './Components/ConfigurationsChart';
+import CreateModal from './Components/CreateItems/CreateModal';
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(true);
@@ -17,15 +18,23 @@ function App() {
   };
 
   return (
-<div className={isMenuOpen ? 'menu-open' : 'menu-closed'}>
+    <div className={isMenuOpen ? 'menu-open' : 'menu-closed'}>
       <CustomMenu onToggleMenu={handleToggleMenu} />
       <Header username="jason statham" />
       <Routes>
         <Route path='/' element={<Outlet/>}>
-          <Route path='preorders' element={<Preorders />} />
-          <Route path='configurations' element={<Configurations />} />
-          <Route path='datacenters' element={<Datacenters />} />
-          <Route path='environments' element={<Environments />} />
+          <Route path='preorders' element={<Preorders />}>
+            <Route path=":id" element={<CreateModal />} />
+          </Route>
+          <Route path='configurations' element={<Configurations />}>
+            <Route path=":id" element={<CreateModal />} />
+          </Route>
+          <Route path='datacenters' element={<Datacenters />}>
+            <Route path=":id" element={<CreateModal />} />
+          </Route>
+          <Route path='environments' element={<Environments />}>
+            <Route path=":id" element={<CreateModal />} />
+          </Route>
           <Route path='configurations_chart' element={<ConfigurationsChart />} />
         </Route>
       </Routes>

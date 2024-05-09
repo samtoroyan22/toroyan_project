@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Input, Button, Form, message, Switch, Checkbox, Select } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createPreorder } from '../../slices/api/createPreorder';
 
 const { Option } = Select;
@@ -9,18 +9,15 @@ const CreateModal = ({ onCloseModal, fieldsConfig }) => {
   const [form] = Form.useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useDispatch();
-  const preorders = useSelector(state => state.preorders.preorders);
 
   const handleSubmit = async () => {
     try {
       setIsSubmitting(true);
       const values = await form.validateFields();
 
-      const lastId = Math.max(...preorders.map(preorder => parseInt(preorder.id)), 0);
+      const newData = { ...values, status: "NEW"};
 
-      const newData = { ...values, status: "NEW", id: (lastId + 1)};
-
-      await dispatch(createPreorder(newData));
+      dispatch(createPreorder(newData));
 
       message.success('Успешно создано');
       onCloseModal();
