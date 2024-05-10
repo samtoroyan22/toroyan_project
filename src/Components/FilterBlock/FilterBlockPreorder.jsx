@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Input, Select, Collapse } from 'antd';
 import './FilterBlock.css';
+import { setPreorders } from '../../slices/preordersSlice';
 
 const { Option } = Select;
 const { Panel } = Collapse;
@@ -13,13 +14,14 @@ const FilterBlock = ({ fetchFilteredPreorders, configurations, environments, dat
     const { name, value } = e.target;
     const updatedFilters = { ...filters, [name]: value };
     setFilters(updatedFilters);
-    fetchFilteredPreorders(updatedFilters);
+    fetchFilteredPreorders(updatedFilters, 'preorders', setPreorders);
   };
 
   const handleSelectChange = (value, name) => {
     const updatedFilters = { ...filters, [name]: value };
     setFilters(updatedFilters);
-    fetchFilteredPreorders(updatedFilters);
+    fetchFilteredPreorders(updatedFilters, 'preorders', setPreorders);
+    console.log("hell");
   };
 
   const uniqueStatuses = statuses ? [...new Set(statuses.map(stat => stat.status))] : [];

@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CreateBlock from './CreateItems/CreateBlock';
 import CreateModal from './CreateItems/CreateModal';
-import FilterBlock from './FilterBlock/FilterBlock';
+import FilterBlock from './FilterBlock/FilterBlockPreorder';
 import PreordersTable from './Table/PreordersTable';
 import { fetchPreorders } from '../api/fetchPreorders';
-import { fetchFilteredPreorders } from '../api/fetchFilteredPreorders';
+import { fetchFiltered } from '../api/fetchFiltered';
 import { fetchEnvironments } from '../api/fetchEnvironments';
 import { fetchConfigurations } from '../api/fetchConfigurations';
 import { fetchDatacenters } from '../api/fetchDatacenters';
-import { createPreorder } from '../api/createPreorder';
+import { createOrder } from '../api/createPreorder';
+import { setPreorders } from '../slices/preordersSlice';
 
 function Preorders() {
   const dispatch = useDispatch();
@@ -29,11 +30,12 @@ function Preorders() {
 
   const handleSubmitPreorder = async (formData) => {
     setIsModalOpen(false);
-    await dispatch(createPreorder(formData));
+    dispatch(createOrder(formData, 'preorders'));
   };
 
   const handleFilterChange = (filters) => {
-    dispatch(fetchFilteredPreorders(filters));
+    dispatch(fetchFiltered(filters, 'preorders', setPreorders));
+
   };
 
   return (

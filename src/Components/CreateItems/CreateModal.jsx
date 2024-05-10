@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Input, Button, Form, message, Switch, Checkbox, Select } from 'antd';
 import { useDispatch } from 'react-redux';
-import { createPreorder } from '../../api/createPreorder';
+import { createOrder } from '../../api/createPreorder';
 
 const { Option } = Select;
 
@@ -17,7 +17,7 @@ const CreateModal = ({ onCloseModal, fieldsConfig }) => {
 
       const newData = { ...values, status: "NEW"};
 
-      dispatch(createPreorder(newData));
+      dispatch(createOrder(newData));
 
       message.success('Успешно создано');
       onCloseModal();
