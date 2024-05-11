@@ -1,0 +1,51 @@
+.menu-container {
+  width: 200px;
+  height: 100%;
+  background-color: #3462a2;
+  color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: width 0.3s ease;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.toggle-button {
+  background-color: transparent;
+  border: none;
+  padding: 28px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.toggle-button:hover {
+  opacity: 0.7;
+}
+
+.menu-container.closed {
+  width: 70px;
+}
+
+.menu-list {
+  list-style: none;
+  padding: 0;
+}
+
+
+.menu-title {
+  margin-left: 20px;
+  display: inline-block;
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+
+.menu-container.closed .menu-title {
+  opacity: 0;
+}
+
+.ant-menu-item-selected {
+  background-color: rgb(39, 56, 111) !important;
+}
