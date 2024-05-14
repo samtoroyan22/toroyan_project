@@ -1,29 +1,27 @@
 import React, { useState } from 'react';
 import { Modal, Input, Button, Form, message, Switch, Checkbox, Select } from 'antd';
-import { useDispatch } from 'react-redux';
-import { createOrder } from '../../api/createPreorder';
+import { createEntity } from '../../api/createEntity';
 
 const { Option } = Select;
 
-const CreateModal = ({ onCloseModal, fieldsConfig }) => {
+const CreateModal = ({ onCloseModal, entity, fieldsConfig }) => {
   const [form] = Form.useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const dispatch = useDispatch();
 
   const handleSubmit = async () => {
     try {
       setIsSubmitting(true);
       const values = await form.validateFields();
 
-      const newData = { ...values, status: "NEW"};
+      const newData = { ...values, status: "NEW" };
 
-      dispatch(createOrder(newData));
+      await createEntity(entity, newData);
 
       message.success('Успешно создано');
       onCloseModal();
     } catch (error) {
       console.error('Ошибка создания:', error);
-      message.error('Ошибка создания. Пожалуйста попробуйте еще раз.');
+      message.error('Ошибка создания. Пожалуйста, попробуйте еще раз.');
     } finally {
       setIsSubmitting(false);
     }

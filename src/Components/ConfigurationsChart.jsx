@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Line } from 'react-chartjs-2';
-import { fetchConfigurationsChart } from '../slices/configurationsChartSlice';
+import { fetchConfigurationsChartData } from '../slices/configurationsChartSlice';
 import { Spin } from 'antd';
 import Chart from 'chart.js/auto';
 
@@ -12,7 +12,7 @@ const ConfigurationsChart = () => {
   const configurationsChartError = useSelector((state) => state.configurationsChart.error);
 
   useEffect(() => {
-    dispatch(fetchConfigurationsChart());
+    dispatch(fetchConfigurationsChartData());
   }, [dispatch]);
 
   if (configurationsChartError) {

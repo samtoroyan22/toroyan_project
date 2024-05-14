@@ -1,5 +1,3 @@
-// import { setPreorders } from '../slices/preordersSlice';
-
 export const fetchFiltered = (params, entity, setAction) => async (dispatch) => {
   try {
     const queryParams = new URLSearchParams(params).toString();

@@ -6,7 +6,7 @@ import FilterBlockEntity from './FilterBlock/FilterBlockEntity';
 import EntityTable from './Table/EntityTable';
 import { fetchFiltered } from '../api/fetchFiltered';
 import { fetchEnvironments } from '../api/fetchEnvironments';
-import { createOrder } from '../api/createPreorder';
+import { createEntity } from '../api/createEntity';
 import { setEnvironments } from '../slices/environmentsSlice';
 
 
@@ -20,9 +20,10 @@ function Environments() {
     dispatch(fetchEnvironments());
   }, [dispatch]);
 
-  const handleSubmitPreorder = async (formData) => {
+  const handleSubmitEnvironments = async (formData) => {
     setIsModalOpen(false);
-    dispatch(createOrder(formData, 'environments'));
+    await createEntity('environments', formData);
+    dispatch(fetchPreorders());
   };
 
   const handleFilterChange = (filters) => {
@@ -32,7 +33,7 @@ function Environments() {
   return (
     <>
       <div id="content">
-        <CreateBlock onCreatePreorder={() => setIsModalOpen(true)} header={"Environments"}/>
+        <CreateBlock onCreate={() => setIsModalOpen(true)} header={"Environments"}/>
         <FilterBlockEntity 
           fetchFiltered={handleFilterChange}
           entity={environments}
@@ -45,7 +46,8 @@ function Environments() {
         {isModalOpen && 
           <CreateModal 
             onCloseModal={() => setIsModalOpen(false)}
-            onSubmit={handleSubmitPreorder}
+            entity='environments'
+            onSubmit={handleSubmitEnvironments}
             fieldsConfig={[
               { name: 'code', label: 'Код', type: 'text' },
               { name: 'title', label: 'Заголовок', type: 'text' },

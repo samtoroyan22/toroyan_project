@@ -9,7 +9,7 @@ import { fetchFiltered } from '../api/fetchFiltered';
 import { fetchEnvironments } from '../api/fetchEnvironments';
 import { fetchConfigurations } from '../api/fetchConfigurations';
 import { fetchDatacenters } from '../api/fetchDatacenters';
-import { createOrder } from '../api/createPreorder';
+import { createEntity } from '../api/createEntity';
 import { setPreorders } from '../slices/preordersSlice';
 
 function Preorders() {
@@ -30,7 +30,8 @@ function Preorders() {
 
   const handleSubmitPreorder = async (formData) => {
     setIsModalOpen(false);
-    dispatch(createOrder(formData, 'preorders'));
+    await createEntity('preorders', formData);
+    dispatch(fetchPreorders());
   };
 
   const handleFilterChange = (filters) => {
@@ -41,14 +42,16 @@ function Preorders() {
   return (
     <>
       <div id="content">
-        <CreateBlock onCreatePreorder={() => setIsModalOpen(true)} header={"Preorders"} />
+        <CreateBlock onCreate={() => setIsModalOpen(true)} header={"Preorders"} />
         <FilterBlock 
           fetchFilteredPreorders={handleFilterChange}
           configurations={configurations} 
           environments={environments}
           datacenters={datacenters}
           statuses={preorders}
+          dispatch={dispatch}
         />
+
         <PreordersTable 
           preorders={preorders}
           configurations={configurations}
@@ -60,6 +63,7 @@ function Preorders() {
         {isModalOpen && 
           <CreateModal 
             onCloseModal={() => setIsModalOpen(false)}
+            entity='preorders'
             onSubmit={handleSubmitPreorder}
             fieldsConfig={[
               { name: 'regNumber', label: 'Регистарционный номер', type: 'text' },

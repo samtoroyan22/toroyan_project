@@ -6,7 +6,7 @@ import FilterBlockConfigurations from './FilterBlock/FilterBlockEntity';
 import ConfigurationsTable from './Table/EntityTable';
 import { fetchFiltered } from '../api/fetchFiltered';
 import { fetchConfigurations } from '../api/fetchConfigurations';
-import { createOrder } from '../api/createPreorder';
+import { createEntity } from '../api/createEntity';
 import { setConfigurations } from '../slices/configurationsSlice';
 
 function Configurations() {
@@ -19,9 +19,10 @@ function Configurations() {
     dispatch(fetchConfigurations());
   }, [dispatch]);
 
-  const handleSubmitPreorder = async (formData) => {
+  const handleSubmitConfigurations = async (formData) => {
     setIsModalOpen(false);
-    dispatch(createOrder(formData, 'configurations'));
+    await createEntity('configurations', formData);
+    dispatch(fetchConfigurations());
   };
 
   const handleFilterChange = (filters) => {
@@ -31,7 +32,7 @@ function Configurations() {
   return (
     <>
       <div id="content">
-        <CreateBlock onCreatePreorder={() => setIsModalOpen(true)} header={"Configurations"}/>
+        <CreateBlock onCreate={() => setIsModalOpen(true)} header={"Configurations"}/>
         <FilterBlockConfigurations 
           fetchFiltered={handleFilterChange}
           entity={configurations}
@@ -44,7 +45,8 @@ function Configurations() {
         {isModalOpen && 
           <CreateModal 
             onCloseModal={() => setIsModalOpen(false)}
-            onSubmit={handleSubmitPreorder}
+            entity='configurations'
+            onSubmit={handleSubmitConfigurations}
             fieldsConfig={[
               { name: 'code', label: 'Код', type: 'text' },
               { name: 'title', label: 'Заголовок', type: 'text' },

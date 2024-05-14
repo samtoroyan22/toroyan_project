@@ -1,13 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { fetchConfigurationsChart } from '../api/fetchConfigurationsChart';
 
-export const fetchConfigurationsChart = createAsyncThunk(
-  'configurationsChart/fetchConfigurationsChart',
+export const fetchConfigurationsChartData = createAsyncThunk(
+  'configurationsChart/fetchConfigurationsChartData',
   async () => {
-    const response = await fetch('http://localhost:3001/configurations_chart');
-    if (!response.ok) {
-      throw new Error('Failed to fetch configurations chart data');
-    }
-    const data = await response.json();
+    const data = await fetchConfigurationsChart();
     return data;
   }
 );
@@ -22,15 +19,15 @@ const configurationsChartSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchConfigurationsChart.pending, (state) => {
+      .addCase(fetchConfigurationsChartData.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchConfigurationsChart.fulfilled, (state, action) => {
+      .addCase(fetchConfigurationsChartData.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload;
       })
-      .addCase(fetchConfigurationsChart.rejected, (state, action) => {
+      .addCase(fetchConfigurationsChartData.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });
