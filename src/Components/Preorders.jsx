@@ -10,6 +10,8 @@ import { fetchEnvironments } from '../api/fetchEnvironments';
 import { fetchConfigurations } from '../api/fetchConfigurations';
 import { fetchDatacenters } from '../api/fetchDatacenters';
 import { createEntity } from '../api/createEntity';
+import { updateEntity } from '../api/updateEntity';
+import { deleteEntity } from '../api/deleteEntity';
 import { setPreorders } from '../slices/preordersSlice';
 
 function Preorders() {
@@ -20,6 +22,7 @@ function Preorders() {
   const datacenters = useSelector(state => state.datacenters.datacenters);
   const preorders = useSelector(state => state.preorders.preorders);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
     dispatch(fetchEnvironments());
@@ -34,10 +37,26 @@ function Preorders() {
     dispatch(fetchPreorders());
   };
 
+  const handleEditPreorder = async (formData) => {
+    setIsModalOpen(false);
+    await updateEntity('preorders', formData.id, formData);
+    dispatch(fetchPreorders());
+  };
+
+  const handleDeletePreorder = async (id) => {
+    await deleteEntity('preorders', id);
+    dispatch(fetchPreorders());
+  };
+
   const handleFilterChange = (filters) => {
     dispatch(fetchFiltered(filters, 'preorders', setPreorders));
-
   };
+
+  const handleEditClick = (item) => {
+    setSelectedItem(item);
+    setIsModalOpen(true);
+  };
+  
 
   return (
     <>
@@ -54,17 +73,20 @@ function Preorders() {
 
         <PreordersTable 
           preorders={preorders}
+          fetchPreorders={fetchPreorders}
           configurations={configurations}
           environments={environments}
           datacenters={datacenters}
           pageSizeOptions={[10, 20, 50]}
           defaultPageSize={10}
+          onEdit={handleEditClick}
         />
         {isModalOpen && 
           <CreateModal 
             onCloseModal={() => setIsModalOpen(false)}
             entity='preorders'
-            onSubmit={handleSubmitPreorder}
+            onSubmit={selectedItem ? handleEditPreorder : handleSubmitPreorder}
+            onDelete={handleDeletePreorder}
             fieldsConfig={[
               { name: 'regNumber', label: 'Регистарционный номер', type: 'text' },
               { name: 'preorderType', label: 'Тип потребности', type: 'select', options: [
@@ -78,6 +100,7 @@ function Preorders() {
               { name: 'isReplication', label: 'Репликация', type: 'switch' },
               { name: 'status', label: 'Статус', value: "New", type: 'checkbox', disabled: true, checked: "checked"}
             ]}
+            initialData={selectedItem}
           />
         }
       </div>

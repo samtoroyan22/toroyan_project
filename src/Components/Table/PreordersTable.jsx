@@ -1,15 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Pagination, Switch } from 'antd';
+import EditModal from '../EditItems/EditModal';
+import { updateEntity } from '../../api/updateEntity';
+import { deleteEntity } from '../../api/deleteEntity';
 import './PreordersTable.css';
 
-const PreordersTable = ({ preorders, pageSizeOptions, defaultPageSize, configurations, environments, datacenters }) => {
+const PreordersTable = ({ preorders, fetchPreorders, pageSizeOptions, defaultPageSize, configurations, environments, datacenters }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(defaultPageSize);
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  useEffect(() => {
+    fetchPreorders();
+  }, [fetchPreorders]);
 
   const handlePageChange = (page, pageSize) => {
     setCurrentPage(page);
     setPageSize(pageSize);
   };
+
+  const handleEdit = (record) => {
+    setSelectedItem(record);
+    setEditModalVisible(true);
+  };
+
+  const handleEditModalCancel = () => {
+    setEditModalVisible(false);
+    setSelectedItem(null);
+  };
+
+  const handleSave = async (id, newData) => {
+    try {
+      await updateEntity('preorders', id, newData);
+      setEditModalVisible(false);
+      setSelectedItem(null);
+      fetchPreorders();
+    } catch (error) {
+      console.error('Error updating preorder:', error);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteEntity('preorders', id);
+      fetchPreorders();
+    } catch (error) {
+      console.error('Error deleting preorder:', error);
+    }
+  };
+
 
   const preordersWithData = preorders.map(preorder => {
     const configuration = configurations.find(config => config.id == preorder.configurationId);
@@ -32,6 +72,7 @@ const PreordersTable = ({ preorders, pageSizeOptions, defaultPageSize, configura
       title: 'Регистрационный номер',
       dataIndex: 'regNumber',
       key: 'regNumber',
+      render: (text, record) => <a onClick={() => handleEdit(record)}>{text}</a>,
     },
     {
       title: 'Тип потребности',
@@ -71,6 +112,7 @@ const PreordersTable = ({ preorders, pageSizeOptions, defaultPageSize, configura
   const displayedData = preordersWithData.slice(startIndex, endIndex);
 
   return (
+    <>
     <div className="custom-table">
       <div>Найдено {preorders.length}</div>
       <Table
@@ -88,8 +130,22 @@ const PreordersTable = ({ preorders, pageSizeOptions, defaultPageSize, configura
         current={currentPage}
         onChange={handlePageChange}
         onShowSizeChange={(current, size) => handlePageChange(1, size)}
-      />
+        />
     </div>
+    {editModalVisible && selectedItem && (
+        <EditModal
+          visible={editModalVisible}
+          onCancel={handleEditModalCancel}
+          onSave={handleSave}
+          onDelete={handleDelete}
+          data={selectedItem}
+          configurations={configurations}
+          environments={environments}
+          datacenters={datacenters}
+          statuses={preorders}
+        />
+      )}
+  </>
   );
 };
 

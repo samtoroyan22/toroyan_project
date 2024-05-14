@@ -266,7 +266,6 @@
       "status": "NEW"
     },
     {
-      "id": "22",
       "regNumber": "VIRT-7",
       "preorderType": "VIRTUALIZATION",
       "configurationId": null,
@@ -275,7 +274,8 @@
         7
       ],
       "isReplication": false,
-      "status": "APPROVED"
+      "status": "APPROVED",
+      "id": "22"
     }
   ],
   "configurations": [

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './index.css';
 import Header from './Header/Header';
 import CustomMenu from './menu/Menu';
-import { Routes, Route, Outlet } from 'react-router-dom';
+import { Routes, Route, Outlet, Navigate } from 'react-router-dom'; // Добавлен Navigate для перенаправления
 import routes from './routes';
 
 function App() {
@@ -17,15 +17,14 @@ function App() {
       <CustomMenu onToggleMenu={handleToggleMenu} />
       <Header username="jason statham" />
       <Routes>
-        <Route path="/" element={<Outlet />}>
-          {routes.map((route, index) => (
-            <Route
-              key={index}
-              path={route.path}
-              element={<route.component />}
-            />
-          ))}
-        </Route>
+        <Route path="/" element={<Navigate to="/preorders" />} />
+        {routes.map((route, index) => (
+          <Route
+            key={index}
+            path={route.path}
+            element={<route.component />}
+          />
+        ))}
       </Routes>
     </div>
   );
