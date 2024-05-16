@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Input, Select, Collapse, Button } from 'antd';
+import { ClearOutlined } from '@ant-design/icons';
 import './FilterBlock.css';
 import { setPreorders } from '../../slices/preordersSlice';
-import { useSelector } from 'react-redux'; 
+import { useSelector } from 'react-redux';
 
 const { Option } = Select;
 const { Panel } = Collapse;
@@ -61,8 +62,13 @@ const FilterBlock = ({ fetchFilteredPreorders, configurations, environments, dat
           </div>
           <div className="filter-item">
             <label htmlFor="preorderType">Тип потребности:</label>
-            <Select id="preorderType" name="preorderType" onChange={(value) => handleSelectChange(value, 'preorderType')} value={filters.preorderType || ''}>
-              <Option value="">Выберите тип потребности</Option>
+            <Select
+              id="preorderType"
+              name="preorderType"
+              onChange={(value) => handleSelectChange(value, 'preorderType')}
+              value={filters.preorderType || ''}
+              suffixIcon={<ClearOutlined onClick={() => handleSelectChange('', 'preorderType')} />}
+            >
               <Option value="SERVER">SERVER</Option>
               <Option value="SHD">SHD</Option>
               <Option value="VIRTUALIZATION">VIRTUALIZATION</Option>
@@ -70,8 +76,13 @@ const FilterBlock = ({ fetchFilteredPreorders, configurations, environments, dat
           </div>
           <div className="filter-item">
             <label htmlFor="configurationId">Конфигурация:</label>
-            <Select id="configurationId" name="configurationId" onChange={(value) => handleSelectChange(value, 'configurationId')} value={filters.configurationId || ''}>
-              <Option value="">Выберите конфигурацию</Option>
+            <Select
+              id="configurationId"
+              name="configurationId"
+              onChange={(value) => handleSelectChange(value, 'configurationId')}
+              value={filters.configurationId || ''}
+              suffixIcon={<ClearOutlined onClick={() => handleSelectChange('', 'configurationId')} />}
+            >
               {configurations && configurations.map(config => (
                 <Option key={config.id} value={config.id}>{config.title}</Option>
               ))}
@@ -79,8 +90,13 @@ const FilterBlock = ({ fetchFilteredPreorders, configurations, environments, dat
           </div>
           <div className="filter-item">
             <label htmlFor="environmentId">Среда:</label>
-            <Select id="environmentId" name="environmentId" onChange={(value) => handleSelectChange(value, 'environmentId')} value={filters.environmentId || ''}>
-              <Option value="">Выберите среду</Option>
+            <Select
+              id="environmentId"
+              name="environmentId"
+              onChange={(value) => handleSelectChange(value, 'environmentId')}
+              value={filters.environmentId || ''}
+              suffixIcon={<ClearOutlined onClick={() => handleSelectChange('', 'environmentId')} />}
+            >
               {environments && environments.map(env => (
                 <Option key={env.id} value={env.id}>{env.title}</Option>
               ))}
@@ -96,11 +112,16 @@ const FilterBlock = ({ fetchFilteredPreorders, configurations, environments, dat
           </div>
           <div className="filter-item">
             <label htmlFor="status">Статус:</label>
-            <Select id="status" name="status" onChange={(value) => handleSelectChange(value, 'status')} value={filters.status || ''}>
-                <Option value="">Выберите статус</Option>
-                {uniqueStatuses && uniqueStatuses.map((status, index) => (
-                    <Option key={index} value={status}>{status}</Option>
-                ))}
+            <Select
+              id="status"
+              name="status"
+              onChange={(value) => handleSelectChange(value, 'status')}
+              value={filters.status || ''}
+              suffixIcon={<ClearOutlined onClick={() => handleSelectChange('', 'status')} />}
+            >
+              {uniqueStatuses && uniqueStatuses.map((status, index) => (
+                <Option key={index} value={status}>{status}</Option>
+              ))}
             </Select>
           </div>
           <div className="filter-item">

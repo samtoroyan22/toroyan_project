@@ -44,7 +44,6 @@ const PreordersTable = ({ preorders, fetchPreorders, pageSizeOptions, defaultPag
   const handleDelete = async (id) => {
     try {
       await deleteEntity('preorders', id);
-      setEditModalVisible(false);
       fetchPreorders();
     } catch (error) {
       console.error('Error deleting preorder:', error);
@@ -137,14 +136,8 @@ const PreordersTable = ({ preorders, fetchPreorders, pageSizeOptions, defaultPag
         <EditModal
           visible={editModalVisible}
           onCancel={handleEditModalCancel}
-          onSave={(id, values) => {
-            handleSave(id, values);
-            fetchPreorders(); // Вызываем fetchPreorders после успешного сохранения
-          }}
-          onDelete={(id) => {
-            handleDelete(id);
-            fetchPreorders(); // Вызываем fetchPreorders после успешного удаления
-          }}
+          onSave={handleSave}
+          onDelete={handleDelete}
           data={selectedItem}
           configurations={configurations}
           environments={environments}

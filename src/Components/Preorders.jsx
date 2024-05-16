@@ -44,6 +44,7 @@ function Preorders() {
   };
 
   const handleDeletePreorder = async (id) => {
+    setIsModalOpen(false);
     await deleteEntity('preorders', id);
     dispatch(fetchPreorders());
   };
