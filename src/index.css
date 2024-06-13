@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Quicksand:wght@300..700&display=swap');
+
+body {
+  font-family: "Quicksand", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+#content {
+  transition: margin-left 0.3s ease;
+}
+
+.menu-closed #content {
+  margin-left: 50px;
+}
+
+.menu-open #content {
+  margin-left: 200px;
+}
